@@ -3,7 +3,9 @@ import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver
 
-url = input("Enter URL here : ")
+url = 'https://www.amazon.in/PTron-HBE6-Headphone-Earphone-Headset/dp/B07D4CN9T7/ref=sr_1_1_sspa?crid=35QWQDH0ATDLW&dchild=1&keywords=earphones+under+200&qid=1599149099&sprefix=earpho%2Caps%2C313&sr=8-1-spons&psc=1&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUFSVVhETVFIM0xCTjkmZW5jcnlwdGVkSWQ9QTA0NjExNDcyRDBGQ1REQjBFS0RUJmVuY3J5cHRlZEFkSWQ9QTA0MzI2MjMzRlNEQzYxVENMSkNFJndpZGdldE5hbWU9c3BfYXRmJmFjdGlvbj1jbGlja1JlZGlyZWN0JmRvTm90TG9nQ2xpY2s9dHJ1ZQ=='
+
+# url = input("Enter URL here : ")
 
 def get_all_reviews(show_all_reviews):
     driver = webdriver.Chrome()
@@ -12,10 +14,25 @@ def get_all_reviews(show_all_reviews):
     driver.quit()
 
     soup = BeautifulSoup(res, 'lxml')
-    image = soup.find_all('div')
-    # container = image.find('div', {'class':'a-container'})
-    print(image)
+    reviews = soup.find('div', {'class': 'reviews-content'})
+    
+    #Getting all the rating from the page
+    for rating in reviews.find_all('i', {'data-hook': 'review-star-rating'}):
+        rating_text = rating.span.text
+        print(rating_text)
 
+    #Getting all the review title from the page
+    for title in reviews.find_all('a', {'data-hook': 'review-title'}):
+        title_text = title.span.text
+        print(title_text)
+
+    counter = 0
+    #Getting all the review data from the page
+    for data in reviews.find_all('span', {'data-hook' : 'review-body'}):
+        counter = counter+1
+        data_text = data.span.text
+        print(data_text)
+        print(counter)
 def open_amazon_url(url):
 
     #Get url (amazon.in / amazon.com)
@@ -30,58 +47,15 @@ def open_amazon_url(url):
     soup = BeautifulSoup(res, 'lxml')
     image = soup.find('div', {'id':'dp'})
     container = image.find('div', {'class':'a-container'})
-    
-    
-    # div = image.find('div', {'id':'dpx-anywhere-atf_feature_div'})
-    # print(container.text)
-    # div = container.find_all('div')
-    # for d in div:
-    #     print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
-    #     print(d)
-    #     print('**********************************************')
-    #     print(d.text)
-    #     print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
-
-    ####################################################################
-    ####################################################################
-    ####################################################################
-
-    # counter = 0
-    # div = image.find_all('div')
-    # for text_review in image.find_all('div', {'class': 'reviewText'}):
-    #     counter = counter+1
-    #     review_text = text_review.span.text
-    #     print(review_text)
-    #     print(counter)
-    # print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
-    # print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
-    # print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
-    # print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
-    # counter = 0
-    # for title_review in image.find_all('a', {'class': 'review-title'}):
-    #     counter = counter+1
-    #     review_title = title_review.span.text
-    #     print(review_title)
-    #     print(counter)
-        
-    # print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
-    # print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
-    # print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
-    # print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
-    # # for star_review in image.find_all('span', {'class': 'a-icon-alt'}):
-    # counter = 0
-    # for star_review in image.find_all('i', {'class': 'review-rating'}):
-    #     counter = counter+1
-    #     review_star = star_review.span.text
-    #     print(review_star)
-    #     print(counter)
 
     #Get see all review link
-    print()
-    print('***************************************************')
-    print()
     review_link = image.find('a', {'data-hook' : 'see-all-reviews-link-foot'})['href']
     see_all_review_url = get_start_url + review_link
+
+    #Printing the url
     print(see_all_review_url)
+
+    #Calling the show all review function
     get_all_reviews(see_all_review_url)
+
 open_amazon_url(url)
