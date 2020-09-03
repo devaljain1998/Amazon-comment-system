@@ -7,6 +7,10 @@ url = 'https://www.amazon.in/PTron-HBE6-Headphone-Earphone-Headset/dp/B07D4CN9T7
 
 # url = input("Enter URL here : ")
 
+#Get url (amazon.in / amazon.com)
+new_url = url.split('/')
+get_start_url = new_url[0]  +'//'+ new_url[2]
+
 def get_all_reviews(show_all_reviews):
     driver = webdriver.Chrome()
     driver.get(show_all_reviews)
@@ -33,11 +37,19 @@ def get_all_reviews(show_all_reviews):
         data_text = data.span.text
         print(data_text)
         print(counter)
-def open_amazon_url(url):
 
-    #Get url (amazon.in / amazon.com)
-    new_url = url.split('/')
-    get_start_url = new_url[0]  +'//'+ new_url[2]
+    #Check for  the next page
+    pagination = soup.find('div', {'id' : 'cm_cr-pagination_bar'})
+    next_page = pagination.find('li', {'class': 'a-last'})
+    get_to_next_page = next_page.a['href']
+    get_full_url = get_start_url + get_to_next_page
+    print(get_full_url)
+    if get_to_next_page != None:
+        get_all_reviews(get_full_url)
+    else:
+        print()
+
+def open_amazon_url(url):
 
     driver = webdriver.Chrome()
     driver.get(url)
