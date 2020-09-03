@@ -3,8 +3,19 @@ import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver
 
-# url = 'https://www.amazon.in/Apple-iPhone-11-128GB-Black/dp/B07XVLW7YK/ref=sr_1_1_sspa?crid=RMOIQXKSR9M4&dchild=1&keywords=smartphone&qid=1598170586&sprefix=smartphone%2Caps%2C-1&sr=8-1-spons&psc=1&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUExSEU5STlaVEtLQ09SJmVuY3J5cHRlZElkPUEwMjE1NzU3MlE1MzdLVk8wQlNJRiZlbmNyeXB0ZWRBZElkPUEwOTQyNzg3MjVHVjlJM0w0VlFVRyZ3aWRnZXROYW1lPXNwX2F0ZiZhY3Rpb249Y2xpY2tSZWRpcmVjdCZkb05vdExvZ0NsaWNrPXRydWU='
 url = input("Enter URL here : ")
+
+def get_all_reviews(show_all_reviews):
+    driver = webdriver.Chrome()
+    driver.get(show_all_reviews)
+    res = driver.execute_script("return document.documentElement.outerHTML")
+    driver.quit()
+
+    soup = BeautifulSoup(res, 'lxml')
+    image = soup.find_all('div')
+    # container = image.find('div', {'class':'a-container'})
+    print(image)
+
 def open_amazon_url(url):
 
     #Get url (amazon.in / amazon.com)
@@ -72,4 +83,5 @@ def open_amazon_url(url):
     review_link = image.find('a', {'data-hook' : 'see-all-reviews-link-foot'})['href']
     see_all_review_url = get_start_url + review_link
     print(see_all_review_url)
+    get_all_reviews(see_all_review_url)
 open_amazon_url(url)
