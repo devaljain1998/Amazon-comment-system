@@ -4,11 +4,9 @@ import pandas as pd
 
 from bs4 import BeautifulSoup
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 
-# class Review():
-#     def __init__(self, title, body, rating):
-#     str, repr 
-
+#Review class 
 class Review:
     def __init__(self, title, body, rating):
         self.title = title
@@ -19,19 +17,31 @@ class Review:
         review = f'{self.title} \n {self.body} \n {self.rating}'
         return review
 
+    def __repr__(self):
+        review = f'{self.title} \n {self.body} \n {self.rating}'
+        return review
+
+#Empty review list
 reviews_list = []
 
 
 # url = 'https://www.amazon.in/PTron-HBE6-Headphone-Earphone-Headset/dp/B07D4CN9T7/ref=sr_1_1_sspa?crid=35QWQDH0ATDLW&dchild=1&keywords=earphones+under+200&qid=1599149099&sprefix=earpho%2Caps%2C313&sr=8-1-spons&psc=1&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUFSVVhETVFIM0xCTjkmZW5jcnlwdGVkSWQ9QTA0NjExNDcyRDBGQ1REQjBFS0RUJmVuY3J5cHRlZEFkSWQ9QTA0MzI2MjMzRlNEQzYxVENMSkNFJndpZGdldE5hbWU9c3BfYXRmJmFjdGlvbj1jbGlja1JlZGlyZWN0JmRvTm90TG9nQ2xpY2s9dHJ1ZQ=='
-
+#Input URL
 url = input("Enter URL here : ")
 
-#Get url (amazon.in / amazon.com)
+#Get url ( like :- amazon.in / amazon.com)
 new_url = url.split('/')
 get_start_url = new_url[0]  +'//'+ new_url[2]
 count = 0
+
+#Getting all the specific product reviews
 def get_all_reviews(show_all_reviews, csv_writer):
-    driver = webdriver.Chrome()
+
+    options = Options()
+    options.add_argument('--headless')
+    options.add_argument('--disable-gpu')
+
+    driver = webdriver.Chrome(options=options)
     driver.get(show_all_reviews)
     res = driver.execute_script("return document.documentElement.outerHTML")
     driver.quit()
@@ -45,25 +55,34 @@ def get_all_reviews(show_all_reviews, csv_writer):
         body = reviews.find('span', {'data-hook': 'review-body'})
         body_text = body.span.text
 
+        #Creating instance of class Review
         review = Review(title_text, body_text, rating_text)
 
+        #Pushing the instance in review list
         reviews_list.append({'title': review.title, 'body': review.body, 'rating': review.rating})
+        
+        #Printing the console statement
+
+
         # csv_writer.writerow([title_text,body_text,rating_text])
 
-    #Check for  the next page
-    # pagination = soup.find('div', {'id' : 'cm_cr-pagination_bar'})
-    # next_page = pagination.find('li', {'class': 'a-last'})
-    # get_to_next_page = next_page.a['href']
-    # get_full_url = get_start_url + get_to_next_page
-    # print(get_full_url)
-    # # global count
-    # count = count+1
+    # Check for  the next page
+    pagination = soup.find('div', {'id' : 'cm_cr-pagination_bar'})
+    next_page = pagination.find('li', {'class': 'a-last'})
+    get_to_next_page = next_page.a['href']
+    get_full_url = get_start_url + get_to_next_page
+    print(get_full_url)
+    global count
+    count = count+1
     # print(count)
-    # if count != 5:
-    #     if get_to_next_page != None:
-    #         get_all_reviews(get_full_url, csv_writer)
-    #     else:
-    #         print()
+
+    print(f'Fetcing all the reviews from page {count}')
+
+    if count != 5:
+        if get_to_next_page != None:
+            get_all_reviews(get_full_url, csv_writer)
+        else:
+            print()
 
 def open_amazon_url(url):
 
@@ -96,5 +115,4 @@ def open_amazon_url(url):
     csv_file.close()
 
 open_amazon_url(url)
-print('pg.no 104')
 print(reviews_list)
