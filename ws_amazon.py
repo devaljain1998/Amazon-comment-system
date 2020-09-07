@@ -9,12 +9,17 @@ from selenium import webdriver
 #     def __init__(self, title, body, rating):
 #     str, repr 
 
-# class Review:
-#     pass
+class Review:
+    def __init__(self, title, body, rating):
+        self.title = title
+        self.body = body
+        self.rating = rating
 
+    def __str__(self):
+        review = f'{self.title} \n {self.body} \n {self.rating}'
+        return review
 
-
-# reviews = []
+reviews_list = []
 
 
 # url = 'https://www.amazon.in/PTron-HBE6-Headphone-Earphone-Headset/dp/B07D4CN9T7/ref=sr_1_1_sspa?crid=35QWQDH0ATDLW&dchild=1&keywords=earphones+under+200&qid=1599149099&sprefix=earpho%2Caps%2C313&sr=8-1-spons&psc=1&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUFSVVhETVFIM0xCTjkmZW5jcnlwdGVkSWQ9QTA0NjExNDcyRDBGQ1REQjBFS0RUJmVuY3J5cHRlZEFkSWQ9QTA0MzI2MjMzRlNEQzYxVENMSkNFJndpZGdldE5hbWU9c3BfYXRmJmFjdGlvbj1jbGlja1JlZGlyZWN0JmRvTm90TG9nQ2xpY2s9dHJ1ZQ=='
@@ -39,31 +44,26 @@ def get_all_reviews(show_all_reviews, csv_writer):
         title_text = title.span.text
         body = reviews.find('span', {'data-hook': 'review-body'})
         body_text = body.span.text
-        # print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
-        # print(rating_text)
-        # print()
-        # print(title_text)
-        # print()
-        # print(body_text)
-        # print()
-        # print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
-        csv_writer.writerow([title_text,body_text,rating_text])
 
+        review = Review(title_text, body_text, rating_text)
+
+        reviews_list.append({'title': review.title, 'body': review.body, 'rating': review.rating})
+        # csv_writer.writerow([title_text,body_text,rating_text])
 
     #Check for  the next page
-    pagination = soup.find('div', {'id' : 'cm_cr-pagination_bar'})
-    next_page = pagination.find('li', {'class': 'a-last'})
-    get_to_next_page = next_page.a['href']
-    get_full_url = get_start_url + get_to_next_page
-    print(get_full_url)
-    global count
-    count = count+1
-    print(count)
-    if count != 5:
-        if get_to_next_page != None:
-            get_all_reviews(get_full_url, csv_writer)
-        else:
-            print()
+    # pagination = soup.find('div', {'id' : 'cm_cr-pagination_bar'})
+    # next_page = pagination.find('li', {'class': 'a-last'})
+    # get_to_next_page = next_page.a['href']
+    # get_full_url = get_start_url + get_to_next_page
+    # print(get_full_url)
+    # # global count
+    # count = count+1
+    # print(count)
+    # if count != 5:
+    #     if get_to_next_page != None:
+    #         get_all_reviews(get_full_url, csv_writer)
+    #     else:
+    #         print()
 
 def open_amazon_url(url):
 
@@ -96,3 +96,5 @@ def open_amazon_url(url):
     csv_file.close()
 
 open_amazon_url(url)
+print('pg.no 104')
+print(reviews_list)
