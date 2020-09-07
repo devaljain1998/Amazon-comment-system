@@ -64,25 +64,25 @@ def get_all_reviews(show_all_reviews, csv_writer):
         #Printing the console statement
 
 
-        # csv_writer.writerow([title_text,body_text,rating_text])
+        csv_writer.writerow([title_text,body_text,rating_text])
 
-    # Check for  the next page
-    pagination = soup.find('div', {'id' : 'cm_cr-pagination_bar'})
-    next_page = pagination.find('li', {'class': 'a-last'})
-    get_to_next_page = next_page.a['href']
-    get_full_url = get_start_url + get_to_next_page
-    print(get_full_url)
-    global count
-    count = count+1
-    # print(count)
-
-    print(f'Fetcing all the reviews from page {count}')
-
-    if count != 5:
-        if get_to_next_page != None:
-            get_all_reviews(get_full_url, csv_writer)
-        else:
-            print()
+    #Pagination in reviews
+    try:
+        # Check for  the next page
+        pagination = soup.find('div', {'id' : 'cm_cr-pagination_bar'})
+        next_page = pagination.find('li', {'class': 'a-last'})
+        get_to_next_page = next_page.a['href']
+        get_full_url = get_start_url + get_to_next_page
+        print(get_full_url)
+        global count
+        count = count+1
+        print(f'\n Fetcing all the reviews from Page No :-{count} \n')
+        
+        # if count != 5:
+        get_all_reviews(get_full_url, csv_writer)
+        
+    except Exception as e:
+        pass
 
 def open_amazon_url(url):
 
@@ -115,4 +115,7 @@ def open_amazon_url(url):
     csv_file.close()
 
 open_amazon_url(url)
-print(reviews_list)
+print('-----------------------------------------------------------------------------')
+print(f'\n\n\n{reviews_list}\n\n\n')
+print('All reviews are fetched Sucessfully')
+
