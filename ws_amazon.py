@@ -2,7 +2,7 @@ import requests
 import csv
 import pandas as pd
 
-from .models import Review
+from models import Review
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -48,7 +48,7 @@ class AmazonReviewScraper:
             review = Review(title_text, body_text, rating_text)
 
             # Pushing the instance in review list
-            self.reviews_list.append(
+            AmazonReviewScraper.reviews_list.append(
                 {'title': review.title, 'body': review.body, 'rating': review.rating})
 
             # Printing the console statement
