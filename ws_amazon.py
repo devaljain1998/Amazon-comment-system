@@ -1,6 +1,7 @@
 import requests
 import csv
 import pandas as pd
+import pprint
 
 from models import Review
 from bs4 import BeautifulSoup
@@ -48,8 +49,9 @@ class AmazonReviewScraper:
             review = Review(title_text, body_text, rating_text)
 
             # Pushing the instance in review list
-            AmazonReviewScraper.reviews_list.append(
-                {'title': review.title, 'body': review.body, 'rating': review.rating})
+            # AmazonReviewScraper.reviews_list.append(
+            #     {'title': review.title, 'body': review.body, 'rating': review.rating})
+            AmazonReviewScraper.reviews_list.append(review)
 
             # Printing the console statement
 
@@ -66,7 +68,7 @@ class AmazonReviewScraper:
             # count = Review.count
             AmazonReviewScraper.count = AmazonReviewScraper.count+1
             print(
-                f'\n Fetcing all the reviews from Page No :-{AmazonReviewScraper.count} \n')
+                f'\n Fetching all the reviews from Page No :-{AmazonReviewScraper.count} \n')
 
             # if count != 5:
             AmazonReviewScraper.get_all_reviews(get_full_url, csv_writer)
@@ -122,5 +124,6 @@ url = input("Enter URL here : ")
 get_all_reviews = AmazonReviewScraper.open_amazon_url(url)
 # open_amazon_url(url)
 print('-----------------------------------------------------------------------------')
-print(f'\n\n\n{AmazonReviewScraper.reviews_list}\n\n\n')
+# print(f'\n\n\n{AmazonReviewScraper.reviews_list}\n\n\n')
+pprint.pprint(AmazonReviewScraper.reviews_list)
 print('All reviews are fetched Sucessfully')
