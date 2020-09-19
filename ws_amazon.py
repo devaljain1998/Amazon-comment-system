@@ -8,6 +8,8 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
+from machine_learning import MachineLearning
+
 # Review class
 
 
@@ -49,8 +51,8 @@ class AmazonReviewScraper:
             review = Review(title_text, body_text, rating_text)
 
             # Pushing the instance in review list
-            # AmazonReviewScraper.reviews_list.append(
-            #     {'title': review.title, 'body': review.body, 'rating': review.rating})
+            AmazonReviewScraper.reviews_list.append(
+                {'title': review.title, 'body': review.body, 'rating': review.rating})
             AmazonReviewScraper.reviews_list.append(review)
 
             # Printing the console statement
@@ -77,6 +79,10 @@ class AmazonReviewScraper:
             pass
 
     def open_amazon_url(url):
+
+        options = Options()
+        options.add_argument('--headless')
+        options.add_argument('--disable-gpu')
 
         driver = webdriver.Chrome()
         driver.get(url)
@@ -108,6 +114,12 @@ class AmazonReviewScraper:
 
         csv_file.close()
 
+        print('-----------------------------------------------------------------------------')
+        print('All reviews are fetched Sucessfully')
+        pprint.pprint(AmazonReviewScraper.reviews_list)
+
+        MachineLearning.import_csvfile()
+
     def __str__(self):
         review = f'{self.title} \n {self.body} \n {self.rating}'
         return review
@@ -116,14 +128,17 @@ class AmazonReviewScraper:
         review = f'{self.title} \n {self.body} \n {self.rating}'
         return review
 
-
-# url = 'https://www.amazon.in/PTron-HBE6-Headphone-Earphone-Headset/dp/B07D4CN9T7/ref=sr_1_1_sspa?crid=35QWQDH0ATDLW&dchild=1&keywords=earphones+under+200&qid=1599149099&sprefix=earpho%2Caps%2C313&sr=8-1-spons&psc=1&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUFSVVhETVFIM0xCTjkmZW5jcnlwdGVkSWQ9QTA0NjExNDcyRDBGQ1REQjBFS0RUJmVuY3J5cHRlZEFkSWQ9QTA0MzI2MjMzRlNEQzYxVENMSkNFJndpZGdldE5hbWU9c3BfYXRmJmFjdGlvbj1jbGlja1JlZGlyZWN0JmRvTm90TG9nQ2xpY2s9dHJ1ZQ=='
 # Input URL
-url = input("Enter URL here : ")
+# n = int(input('Enter number of products want to compare : '))
+
+# my_list = [input('Enter URL here as input # %s  : ' % i) for i in range(n)]
+
+# print(my_list)
+
+# # url = input("Enter URL here : ")
+# for url in my_list:
+#     print(url)
+
+url = input('Enter URL here : ')
 
 get_all_reviews = AmazonReviewScraper.open_amazon_url(url)
-# open_amazon_url(url)
-print('-----------------------------------------------------------------------------')
-# print(f'\n\n\n{AmazonReviewScraper.reviews_list}\n\n\n')
-pprint.pprint(AmazonReviewScraper.reviews_list)
-print('All reviews are fetched Sucessfully')
