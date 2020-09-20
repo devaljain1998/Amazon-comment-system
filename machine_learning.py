@@ -12,6 +12,7 @@ import seaborn as sns
 
 # sklearn for feature extraction & modeling
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer, TfidfTransformer
+from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
@@ -28,98 +29,15 @@ class MachineLearning:
 
     def import_csvfile():
         print('\nImporting Train set data csv file ...')
-        df = pd.read_csv('pdata.csv')
+        df = pd.read_csv('testdata.csv')
 
         #Getting the head of data
         df.head()
         
         #Caling pipeline function
         MachineLearning.func_pipeline(df)
-
-    #Library for building wordcloud
-    def word_cloud(df):
-        heading_1 = df[df["RATING"]==1]["TITLE"] # Extract only Summary of reviews
-        collapsed_heading_1 = heading_1.str.cat(sep=' ')
-
-        heading_2 = df[df["RATING"]==2]["TITLE"] # Extract only Summary of reviews
-        collapsed_heading_2 = heading_2.str.cat(sep=' ')
-
-        heading_3 = df[df["RATING"]==3]["TITLE"] # Extract only Summary of reviews
-        collapsed_heading_3 = heading_3.str.cat(sep=' ')
-
-        heading_4 = df[df["RATING"]==4]["TITLE"] # Extract only Summary of reviews
-        collapsed_heading_4 = heading_4.str.cat(sep=' ')
-
-        heading_5 = df[df["RATING"]==5]["TITLE"] # Extract only Summary of reviews
-        collapsed_heading_5 = heading_5.str.cat(sep=' ')
-
-        # Create stopword list:
-        # stopwords = set(STOPWORDS)
-        #stopwords.update(["Subject","re","fw","fwd"])
-
-        #Graphs
-        '''
-        print("Word Cloud for Rating 1")
-
-        # Generate a word cloud image
-        wordcloud = WordCloud(stopwords=stopwords, background_color="white",max_words=50).generate(collapsed_heading_1)
-
-        # Display the generated image:
-        # the matplotlib way:1
-        plt.imshow(wordcloud, interpolation='bilinear')
-        plt.axis("off")
-        plt.show()
-
-        print("\nWord Cloud for Rating 2")
-
-        # Generate a word cloud image
-        wordcloud = WordCloud(stopwords=stopwords, background_color="white",max_words=50).generate(collapsed_heading_2)
-
-        # Display the generated image:
-        # the matplotlib way:1
-        plt.imshow(wordcloud, interpolation='bilinear')
-        plt.axis("off")
-        plt.show()
-
-        print("\nWord Cloud for Rating 3")
-        # Generate a word cloud image
-        wordcloud = WordCloud(stopwords=stopwords, background_color="white",max_words=50).generate(collapsed_heading_3)
-
-        # Display the generated image:
-        # the matplotlib way:1
-        plt.imshow(wordcloud, interpolation='bilinear')
-        plt.axis("off")
-        plt.show()
-
-        print("\nWord Cloud for Rating 4")
-
-        # Generate a word cloud image
-        wordcloud = WordCloud(stopwords=stopwords, background_color="white",max_words=50).generate(collapsed_heading_4)
-
-        # Display the generated image:
-        # the matplotlib way:1
-        plt.imshow(wordcloud, interpolation='bilinear')
-        plt.axis("off")
-        plt.show()
-            
-        print("\nWord Cloud for Rating 5")
-        # Generate a word cloud image
-        wordcloud = WordCloud(stopwords=stopwords, background_color="white",max_words=50).generate(collapsed_heading_5)
-
-        # Display the generated image:
-        # the matplotlib way:1
-        plt.imshow(wordcloud, interpolation='bilinear')
-        plt.axis("off")
-        plt.show()
-        '''
         
     def func_pipeline(df):
-        # Building Pipeline for raw text transformation
-        '''clf = Pipeline([
-            ('vect', CountVectorizer(stop_words= "english")),
-            ('tfidf', TfidfTransformer()),
-            ('classifier', MultinomialNB()),
-            ])'''
         print('\nFitting pipeline ...')
         clf = Pipeline([
             ('vect', CountVectorizer(stop_words= "english")),
@@ -142,7 +60,7 @@ class MachineLearning:
         print('\nFitting training data in model ...')
         model = clf.fit(X_train,y_train)
 
-        #print("Accuracy of Classifier is {}".format(model.score(X_test,y_test)))
+        print("Accuracy of Classifier is {}".format(model.score(X_test,y_test)))
 
         y_predicted = model.predict(X_test)
         y_predicted[0:10]
@@ -169,3 +87,4 @@ class MachineLearning:
         print(f'\nAverage Rating :- {average}')
 
 #MachineLearning.import_csvfile()
+print('Machine Learning')
