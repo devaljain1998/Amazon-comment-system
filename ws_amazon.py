@@ -12,7 +12,6 @@ from machine_learning import MachineLearning
 
 # Review class
 
-
 class AmazonReviewScraper:
 
     # Empty review list
@@ -52,11 +51,12 @@ class AmazonReviewScraper:
 
             # Pushing the instance in review list
             AmazonReviewScraper.reviews_list.append(
-                {'title': review.title, 'body': review.body, 'rating': review.rating})
+                {'title': review.title, 'body': review.body, 'rating': review.rating}
+            )
+
             AmazonReviewScraper.reviews_list.append(review)
 
             # Printing the console statement
-
             csv_writer.writerow([title_text, body_text, rating_text])
 
         #Pagination in reviews
@@ -86,8 +86,7 @@ class AmazonReviewScraper:
 
         driver = webdriver.Chrome()
         driver.get(url)
-        res = driver.execute_script(
-            "return document.documentElement.outerHTML")
+        res = driver.execute_script("return document.documentElement.outerHTML")
         driver.quit()
 
         soup = BeautifulSoup(res, 'lxml')
@@ -95,8 +94,7 @@ class AmazonReviewScraper:
         container = image.find('div', {'class': 'a-container'})
 
         # Get see all review link
-        review_link = image.find(
-            'a', {'data-hook': 'see-all-reviews-link-foot'})['href']
+        review_link = image.find('a', {'data-hook': 'see-all-reviews-link-foot'})['href']
         see_all_review_url = AmazonReviewScraper.get_url(url) + review_link
 
         # Printing the url
@@ -139,6 +137,8 @@ class AmazonReviewScraper:
 # for url in my_list:
 #     print(url)
 
-url = input('Enter URL here : ')
+url = "https://www.amazon.in/Nursery-Rhymes-Vol-1/dp/B00LIV50BO/ref=pd_rhf_gw_p_img_1?_encoding=UTF8&psc=1&refRID=KM54MFCWWWQZKH2EBP49"
+
+# url = input('Enter URL here : ')
 
 get_all_reviews = AmazonReviewScraper.open_amazon_url(url)
