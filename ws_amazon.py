@@ -128,18 +128,24 @@ class AmazonReviewScraper:
         return review
 
 # Input URL
-# n = int(input('Enter number of products want to compare : '))
+n = int(input('Enter number of products want to compare : '))
 
-# my_list = [input('Enter URL here as input # %s  : ' % i) for i in range(n)]
+my_list = [input('Enter URL here as input # %s  : ' % i) for i in range(n)]
 
-# print(my_list)
+print('-------------------------------------------------------------------------------')
+print(my_list)
+print('-------------------------------------------------------------------------------')
 
-# # url = input("Enter URL here : ")
-# for url in my_list:
-#     print(url)
+# url = input("Enter URL here : ")
+for url in my_list:
+    AmazonReviewScraper.count = 0
+    print('-------------------------------------------------------------------------------')
+    print(url)
+    print('-------------------------------------------------------------------------------')
+    AmazonReviewScraper.open_amazon_url(url)
 
 # url = "https://www.amazon.in/Nursery-Rhymes-Vol-1/dp/B00LIV50BO/ref=pd_rhf_gw_p_img_1?_encoding=UTF8&psc=1&refRID=KM54MFCWWWQZKH2EBP49"
 
-url = input('Enter URL here : ')
+# url = input('Enter URL here : ')
 
-get_all_reviews = AmazonReviewScraper.open_amazon_url(url)
+# get_all_reviews = AmazonReviewScraper.open_amazon_url(url)
