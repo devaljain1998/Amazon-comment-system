@@ -36,7 +36,7 @@ class MachineLearning:
         
         #Caling pipeline function
         MachineLearning.func_pipeline(df)
-        
+
     def func_pipeline(df):
         print('\nFitting pipeline ...')
         clf = Pipeline([
@@ -44,7 +44,7 @@ class MachineLearning:
             ('tfidf', TfidfTransformer()),
             ('classifier', RandomForestClassifier(n_jobs= -1)),
             ])
-
+        
         # Remove records with blank values
         df_1 = df.dropna()
         df_1.shape , df.shape
@@ -84,7 +84,11 @@ class MachineLearning:
         print(f'\nIndividual rating prediction :- {model}')
             
         average = model.sum()/len(model)
+        
+        MachineLearning.average_rating(average)
+                
+    def average_rating(average):
         print(f'\nAverage Rating :- {average}')
+        return average
 
-#MachineLearning.import_csvfile()
-print('Machine Learning')
+# MachineLearning.import_csvfile()

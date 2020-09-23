@@ -60,23 +60,25 @@ class AmazonReviewScraper:
             csv_writer.writerow([title_text, body_text, rating_text])
 
         #Pagination in reviews
-        try:
-            # Check for  the next page
-            pagination = soup.find('div', {'id': 'cm_cr-pagination_bar'})
-            next_page = pagination.find('li', {'class': 'a-last'})
-            get_to_next_page = next_page.a['href']
-            get_full_url = AmazonReviewScraper.get_url(url) + get_to_next_page
-            print(get_full_url)
-            # count = Review.count
-            AmazonReviewScraper.count = AmazonReviewScraper.count+1
-            print(
-                f'\n Fetching all the reviews from Page No :-{AmazonReviewScraper.count} \n')
+        if AmazonReviewScraper.count <= 99:
+            try:
+                AmazonReviewScraper.count = AmazonReviewScraper.count+1
+                print(f'\n Fetching all the reviews from Page No :-{AmazonReviewScraper.count} \n')
+                # Check for  the next page
+                pagination = soup.find('div', {'id': 'cm_cr-pagination_bar'})
+                next_page = pagination.find('li', {'class': 'a-last'})
+                get_to_next_page = next_page.a['href']
+                get_full_url = AmazonReviewScraper.get_url(url) + get_to_next_page
+                print(get_full_url)
+                # count = Review.count
 
-            # if count != 5:
-            AmazonReviewScraper.get_all_reviews(get_full_url, csv_writer)
+                # if count != 5:
+                AmazonReviewScraper.get_all_reviews(get_full_url, csv_writer)
 
-        except Exception as e:
-            pass
+            except Exception as e:
+                pass
+        else :
+            print()
 
     def open_amazon_url(url):
 
@@ -109,14 +111,13 @@ class AmazonReviewScraper:
 
         # Calling the show all review function
         AmazonReviewScraper.get_all_reviews(see_all_review_url, csv_writer)
-
         csv_file.close()
 
         print('-----------------------------------------------------------------------------')
         print('All reviews are fetched Sucessfully')
         pprint.pprint(AmazonReviewScraper.reviews_list)
-
         MachineLearning.import_csvfile()
+
 
     def __str__(self):
         review = f'{self.title} \n {self.body} \n {self.rating}'
@@ -137,8 +138,8 @@ class AmazonReviewScraper:
 # for url in my_list:
 #     print(url)
 
-url = "https://www.amazon.in/Nursery-Rhymes-Vol-1/dp/B00LIV50BO/ref=pd_rhf_gw_p_img_1?_encoding=UTF8&psc=1&refRID=KM54MFCWWWQZKH2EBP49"
+# url = "https://www.amazon.in/Nursery-Rhymes-Vol-1/dp/B00LIV50BO/ref=pd_rhf_gw_p_img_1?_encoding=UTF8&psc=1&refRID=KM54MFCWWWQZKH2EBP49"
 
-# url = input('Enter URL here : ')
+url = input('Enter URL here : ')
 
 get_all_reviews = AmazonReviewScraper.open_amazon_url(url)
