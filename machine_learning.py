@@ -16,7 +16,7 @@ from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 
-class MachineLearning:
+class ReviewSentimentalAnalyser:
     filename = ''
     product_average_rating=0
 
@@ -28,7 +28,7 @@ class MachineLearning:
         df.head()
         
         #Calling pipeline function
-        MachineLearning.func_pipeline(df)
+        ReviewSentimentalAnalyser.func_pipeline(df)
 
     def func_pipeline(df):
         print('\nFitting pipeline ...')
@@ -42,7 +42,7 @@ class MachineLearning:
         df_1 = df.dropna()
 
         #Calling test train data function
-        MachineLearning.test_train_data(df_1, clf)
+        ReviewSentimentalAnalyser.test_train_data(df_1, clf)
 
     def test_train_data(df_1, clf):
         print('\nSetting training and test data in model ...')
@@ -60,8 +60,8 @@ class MachineLearning:
         cnf_matrix = confusion_matrix(y_test, y_predicted)
 
         #Calling read amazon cav file function
-        filename = MachineLearning.filename
-        MachineLearning.read_amazon_csv_file(clf, filename)
+        filename = ReviewSentimentalAnalyser.filename
+        ReviewSentimentalAnalyser.read_amazon_csv_file(clf, filename)
 
     def read_amazon_csv_file(clf, filename):
         print('\nImporting the Amzon web scraping csv file ...')
@@ -74,10 +74,10 @@ class MachineLearning:
             
         average = model.sum()/len(model)
         
-        MachineLearning.average_rating(average)
+        ReviewSentimentalAnalyser.average_rating(average)
                 
     def average_rating(average):
         print(f'\nAverage Rating :- {average}')
-        MachineLearning.product_average_rating = average
+        ReviewSentimentalAnalyser.product_average_rating = average
         return average
 

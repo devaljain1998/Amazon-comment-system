@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
-from machine_learning import MachineLearning
+from machine_learning import ReviewSentimentalAnalyser
 
 # Review class
 
@@ -121,9 +121,9 @@ class AmazonReviewScraper:
         print('-----------------------------------------------------------------------------')
         print('All reviews are fetched Sucessfully')
         pprint.pprint(AmazonReviewScraper.reviews_list)
-        MachineLearning.filename = file_name
-        MachineLearning.import_csvfile()
-        AmazonReviewScraper.average_rating_list.append(MachineLearning.product_average_rating)
+        ReviewSentimentalAnalyser.filename = file_name
+        ReviewSentimentalAnalyser.import_csvfile()
+        AmazonReviewScraper.average_rating_list.append(ReviewSentimentalAnalyser.product_average_rating)
 
 
     def __str__(self):
