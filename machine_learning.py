@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
 
-import glob
-import os
 import numpy as np
 import pandas as pd
 
 # Visualization
 import matplotlib.pyplot as plt
-from matplotlib.ticker import FuncFormatter
-import seaborn as sns
+# from matplotlib.ticker import FuncFormatter
+# import seaborn as sns
 
 # sklearn for feature extraction & modeling
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer, TfidfTransformer
@@ -19,13 +17,14 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
-from sklearn.model_selection import GridSearchCV
+# from sklearn.model_selection import GridSearchCV
 
-from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
+# from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
 
 class MachineLearning:
+    filename = ''
     product_average_rating=0
-    sns.set(color_codes = True)
+    # sns.set(color_codes = True)
 
     def import_csvfile():
         print('\nImporting Train set data csv file ...')
@@ -34,7 +33,7 @@ class MachineLearning:
         #Getting the head of data
         df.head()
         
-        #Caling pipeline function
+        #Calling pipeline function
         MachineLearning.func_pipeline(df)
 
     def func_pipeline(df):
@@ -63,7 +62,7 @@ class MachineLearning:
         print("Accuracy of Classifier is {}".format(model.score(X_test,y_test)))
 
         y_predicted = model.predict(X_test)
-        y_predicted[0:10]
+        # y_predicted[0:10]
 
         #Confusion Matrix
         # Compute confusion matrix
@@ -72,11 +71,12 @@ class MachineLearning:
         #cnf_matrix
 
         #Calling read amazon cav file function
-        MachineLearning.read_amazon_csv_file(clf)
+        filename = MachineLearning.filename
+        MachineLearning.read_amazon_csv_file(clf, filename)
 
-    def read_amazon_csv_file(clf):
+    def read_amazon_csv_file(clf, filename):
         print('\nImporting the Amzon web scraping csv file ...')
-        new_dataset = pd.read_csv('reviews.csv')
+        new_dataset = pd.read_csv(filename)
         new_X = new_dataset['Title']
 
         #example = ['Worst battery in expensive iphone']

@@ -102,10 +102,14 @@ class AmazonReviewScraper:
 
         # Printing the url
         print(see_all_review_url)
-
+        
         # Opening the CSV file
-        csv_file = open('reviews.csv', 'w')
-        read_csv_file = open('reviews.csv', 'r')
+        global file_count
+        file_count = file_count+1
+        str_n = str(file_count)
+        file_name = 'reviews_' + str_n + '.csv'
+        csv_file = open(file_name, 'w')
+        read_csv_file = open(file_name, 'r')
         csv_writer = csv.writer(csv_file)
         reader = csv.reader(read_csv_file)
         csv_writer.writerow(['Title', 'Data', 'Rating'])
@@ -117,6 +121,7 @@ class AmazonReviewScraper:
         print('-----------------------------------------------------------------------------')
         print('All reviews are fetched Sucessfully')
         pprint.pprint(AmazonReviewScraper.reviews_list)
+        MachineLearning.filename = file_name
         MachineLearning.import_csvfile()
         AmazonReviewScraper.average_rating_list.append(MachineLearning.product_average_rating)
 
@@ -133,7 +138,7 @@ class AmazonReviewScraper:
 n = int(input('Enter number of products want to compare : '))
 
 my_list = [input('Enter URL here as input # %s  : ' % i) for i in range(n)]
-
+file_count = -1
 print('-------------------------------------------------------------------------------')
 print(my_list)
 print('-------------------------------------------------------------------------------')
