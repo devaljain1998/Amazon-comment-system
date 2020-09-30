@@ -24,7 +24,7 @@ from sklearn.model_selection import GridSearchCV
 from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
 
 class MachineLearning:
-
+    product_average_rating=0
     sns.set(color_codes = True)
 
     def import_csvfile():
@@ -89,6 +89,6 @@ class MachineLearning:
                 
     def average_rating(average):
         print(f'\nAverage Rating :- {average}')
+        MachineLearning.product_average_rating = average
         return average
 
-# MachineLearning.import_csvfile()

@@ -17,6 +17,7 @@ class AmazonReviewScraper:
     # Empty review list
     reviews_list = []
     count = 0
+    average_rating_list = []
 
     def get_url(url):
         # Get url ( like :- amazon.in / amazon.com)
@@ -117,6 +118,7 @@ class AmazonReviewScraper:
         print('All reviews are fetched Sucessfully')
         pprint.pprint(AmazonReviewScraper.reviews_list)
         MachineLearning.import_csvfile()
+        AmazonReviewScraper.average_rating_list.append(MachineLearning.product_average_rating)
 
 
     def __str__(self):
@@ -144,8 +146,4 @@ for url in my_list:
     print('-------------------------------------------------------------------------------')
     AmazonReviewScraper.open_amazon_url(url)
 
-# url = "https://www.amazon.in/Nursery-Rhymes-Vol-1/dp/B00LIV50BO/ref=pd_rhf_gw_p_img_1?_encoding=UTF8&psc=1&refRID=KM54MFCWWWQZKH2EBP49"
-
-# url = input('Enter URL here : ')
-
-# get_all_reviews = AmazonReviewScraper.open_amazon_url(url)
+print(f'Average Rating of all the products :- {AmazonReviewScraper.average_rating_list}')
