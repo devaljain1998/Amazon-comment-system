@@ -9,7 +9,9 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
 from machine_learning import ReviewSentimentalAnalyser
+# from average_rating import AverageRating
 
+from algo import PipelineClass, PipelineNB, PipelineLR, PipelineSWN
 # Review class
 
 class AmazonReviewScraper:
@@ -121,8 +123,9 @@ class AmazonReviewScraper:
         print('-----------------------------------------------------------------------------')
         print('All reviews are fetched Sucessfully')
         pprint.pprint(AmazonReviewScraper.reviews_list)
+        global choose
         ReviewSentimentalAnalyser.filename = file_name
-        ReviewSentimentalAnalyser.import_csvfile()
+        ReviewSentimentalAnalyser.import_csvfile(choose)
         AmazonReviewScraper.average_rating_list.append(ReviewSentimentalAnalyser.product_average_rating)
 
 
@@ -142,6 +145,14 @@ file_count = -1
 print('-------------------------------------------------------------------------------')
 print(my_list)
 print('-------------------------------------------------------------------------------')
+
+print("Enter 'a' to choose Naïve Bayes algorithm")
+print("Enter 'b' to choose Logistic Regression algorithm")
+# print("Enter 'c' to choose SentiWordNet algorithm")
+
+choose = input()
+
+print(choose)
 
 # url = input("Enter URL here : ")
 for url in my_list:
