@@ -11,7 +11,6 @@ from selenium.webdriver.chrome.options import Options
 from machine_learning import ReviewSentimentalAnalyser
 # from average_rating import AverageRating
 
-from algo import PipelineClass, PipelineNB, PipelineLR, PipelineSWN
 # Review class
 
 class AmazonReviewScraper:
@@ -148,11 +147,9 @@ print('-------------------------------------------------------------------------
 
 print("Enter 'a' to choose Naïve Bayes algorithm")
 print("Enter 'b' to choose Logistic Regression algorithm")
-# print("Enter 'c' to choose SentiWordNet algorithm")
+print("Enter 'c' to choose SentiWordNet algorithm")
 
 choose = input()
-
-print(choose)
 
 # url = input("Enter URL here : ")
 for url in my_list:

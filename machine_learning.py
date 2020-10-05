@@ -16,7 +16,7 @@ from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 
-from algo import PipelineClass, PipelineNB, PipelineLR, PipelineSWN
+from algo import NaiveBayesAlgorithm, LogisticRegressionAlgorithm, SentiWordNetAlgorithm
 # from average_rating import AverageRating
 
 class ReviewSentimentalAnalyser:
@@ -33,12 +33,13 @@ class ReviewSentimentalAnalyser:
         #Calling pipeline function
         ReviewSentimentalAnalyser.choose_algorithm(choose, df)
     def factory_method_design(obj = ''):
-        objs = dict(a=PipelineNB, b=PipelineLR, c=PipelineSWN)
+        objs = dict(a=NaiveBayesAlgorithm, b=LogisticRegressionAlgorithm, c=SentiWordNetAlgorithm)
         return objs[obj]
 
     def choose_algorithm(choose, df):
+        filename = ReviewSentimentalAnalyser.filename
         algorithm = ReviewSentimentalAnalyser.factory_method_design(choose)
-        algorithm.func_pipeline(df)
+        algorithm.algorithm(df, filename)
         # PipelineClass.func_pipeline(df)
         
     def read_amazon_csv_file(clf, filename):
