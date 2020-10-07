@@ -19,6 +19,7 @@ class AmazonReviewScraper:
     reviews_list = []
     count = 0
     average_rating_list = []
+    product_details = []
 
     def get_url(url):
         # Get url ( like :- amazon.in / amazon.com)
@@ -132,8 +133,10 @@ class AmazonReviewScraper:
         global choose
         ReviewSentimentalAnalyser.filename = file_name
         ReviewSentimentalAnalyser.import_csvfile(choose)
-        AmazonReviewScraper.average_rating_list.append(ReviewSentimentalAnalyser.product_average_rating)
-
+        # AmazonReviewScraper.average_rating_list.append(ReviewSentimentalAnalyser.product_average_rating)
+        machine_learning_rating = ReviewSentimentalAnalyser.product_average_rating
+        # print(f'Machine Learning Average Rating :- {ReviewSentimentalAnalyser.product_average_rating}')
+        AmazonReviewScraper.get_title_image_rating(product_title, product_image, product_rating, machine_learning_rating)
 
     def __str__(self):
         review = f'{self.title} \n {self.body} \n {self.rating}'
@@ -142,6 +145,24 @@ class AmazonReviewScraper:
     def __repr__(self):
         review = f'{self.title} \n {self.body} \n {self.rating}'
         return review
+
+    def get_title_image_rating(title, image, rating, machine_learning_rating):
+        details = {}
+        roundof = round(machine_learning_rating, 1)
+        ml_rating = str(roundof) + ' out of 5 starts'
+        title = title.split('\n')
+        for get_title in title:
+            if get_title != '':
+                title = get_title
+                break
+
+        details['title'] = title
+        details['image'] = image
+        details['amazon_rating'] = rating
+        details['machine_learning_rating'] = ml_rating
+        AmazonReviewScraper.product_details.append(details)
+    
+
 
 # Input URL
 n = int(input('Enter number of products want to compare : '))
@@ -166,4 +187,4 @@ for url in my_list:
     print('-------------------------------------------------------------------------------')
     AmazonReviewScraper.open_amazon_url(url)
 
-print(f'Average Rating of all the products :- {AmazonReviewScraper.average_rating_list}')
+print(AmazonReviewScraper.product_details)
