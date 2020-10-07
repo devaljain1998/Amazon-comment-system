@@ -94,7 +94,14 @@ class AmazonReviewScraper:
         driver.quit()
 
         soup = BeautifulSoup(res, 'lxml')
+
+
         image = soup.find('div', {'id': 'dp'})
+
+        product_title = soup.find('div', {'id': 'title_feature_div'}).find('div', {'id': 'titleSection'}).find('h1', {'id': 'title'}).find('span', {'id': 'productTitle'}).text
+        product_image = image.find('div', {'id': 'dp-container'}).find('div', {'id': 'leftCol'}).find('div', {'id': 'imageBlock'}).find('img', {'id': 'landingImage'})['src']
+        product_rating = image.find('div', {'id': 'dp-container'}).find('div', {'id': 'centerCol'}).find('div', {'id': 'averageCustomerReviews_feature_div'}).find('div', {'id': 'averageCustomerReviews'}).find('span', {'id': 'acrPopover'})['title']
+        
         container = image.find('div', {'class': 'a-container'})
 
         # Get see all review link
