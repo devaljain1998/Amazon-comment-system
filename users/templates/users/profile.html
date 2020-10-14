@@ -1,0 +1,50 @@
+{% extends "amazon/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container">
+    <div class="card p-5">
+        <div class="content-section">
+            <div class="row">
+                <div class="col-lg-4">
+                    <img src="{{ user.profile.image.url }}" alt="" class="rounded-circle account-img">
+                </div>
+                <div class="col-lg-8 mt-3">
+                    <div class="md-3">
+                        <h4>Personal Details</h4>
+                    </div>
+                    <div>
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th scope="col">FirstName</th>
+                                    <td>{{user.first_name}}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="col">LastName</th>
+                                    <td>{{user.last_name}}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="col">Username</th>
+                                    <td>{{user.username}}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="col">Email</th>
+                                    <td>{{user.email}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="row mt-3">
+                <div class="col-lg-4 text-right">
+                    <a href="/profile/change-profile"><small>Change Profile</small></a>
+                </div>
+                <div class="col-lg-8 text-right">
+                    <a href="/profile/change-details"><small>Change Details</small></a>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,53 @@
+{% extends "amazon/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="card container p-3 mb-3">
+    <legend class="border-bottom mb-4">Enter Links</legend>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for i in number_of_links %}
+        <fieldset class="form-group">
+            {{ link_form|crispy }}
+        </fieldset>
+        {% endfor %}
+        <div class="row">
+            <div class="col-lg-6 form-group">
+                <div class="hide" style="display: none;">
+                    {{ get_all_links }}
+                </div>
+                <button type="submit" class="btn btn-outline-info" onclick="get_all_link()">Choose Algorithm</button>
+            </div>
+        </div>
+        <div>
+        </div>
+        <!-- <div class="row">
+            <textarea name="" id="get_links" cols="30" rows="10"></textarea>
+        </div> -->
+    </form>
+</div>
+
+<script>
+
+
+    // hide = document.getElementsByClassName('hide').style.display = "block";
+
+    function get_all_link() {
+        get_link = []
+        // console.log('Hello');
+        link = document.getElementsByTagName('input')
+        for(i=1; i<link.length; i++){                
+            get_link.push(link[i].value);
+        }
+        console.log(get_link);
+        link[link.length-1].innerHTML = get_link
+        console.log(link[link.length-1].value);
+
+        text = document.getElementById('id_get_all_links')
+        console.log(text);
+        text.value = get_link
+        console.log(text);
+
+    }
+</script>
+
+{% endblock content %}
