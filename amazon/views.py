@@ -132,4 +132,7 @@ def get_algorithm(request):
 
 def calling_amazon_web_scraper(number_of_links, links, choose_agorithm):
     print(f'Number of links : {number_of_links}\n Links: {links}\n Algorithm: {choose_agorithm}')
-    AmazonReviewScraper.main_function(number_of_links, links, choose_agorithm)
+
+    amazon_scraper = AmazonReviewScraper()
+
+    amazon_scraper.main_function(number_of_links, links, choose_agorithm)
