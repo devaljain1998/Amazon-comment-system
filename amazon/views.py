@@ -18,7 +18,6 @@ def homepage(request):
 @login_required
 def get_amazon_review(request):
     reviews = AmazonReviewScraper.product_details
-
     print(AmazonReviewScraper.product_details)
     content = {
         'reviews' : reviews
@@ -49,8 +48,6 @@ def get_amazon_link(request):
     if request.method == 'POST':
         link_form = LinkForm(request.POST)
         get_all_links = GetAllLink(request.POST)
-        # print(link_form['link'].data)
-        # print(get_all_links['get_all_links'].data)
         links = get_all_links['get_all_links'].data
         link = links.split(",")
         print(link)
@@ -77,6 +74,7 @@ def get_amazon_link(request):
     return render(request, 'amazon/get_amazon_link.html', content)
 
 def get_algorithm(request):
+    AmazonReviewScraper.product_details = []
     if request.method == 'POST':
         choose_algorithm = ChooseAlgorithm(request.POST)
         print(choose_algorithm['algorithm'].data)
