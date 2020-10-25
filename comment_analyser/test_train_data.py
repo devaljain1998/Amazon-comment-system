@@ -21,5 +21,7 @@ class TestTrainData:
         from .machine_learning import ReviewSentimentalAnalyser
 
         #Calling read amazon cav file function
-        filename = ReviewSentimentalAnalyser.filename
-        ReviewSentimentalAnalyser.read_amazon_csv_file(clf, filename)
+        review_sentimental_analyser = ReviewSentimentalAnalyser()
+        filename = review_sentimental_analyser.filename
+        print(f'FILEnAMNE ----------------------- {filename}')
+        review_sentimental_analyser.read_amazon_csv_file(clf, filename)

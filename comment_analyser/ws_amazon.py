@@ -70,7 +70,7 @@ class AmazonReviewScraper:
             csv_writer.writerow([title_text, body_text, rating_text])
 
         #Pagination in reviews
-        if self.count <= 3:
+        if self.count <= 99:
             try:
                 self.count = self.count+1
                 print(f'\n Fetching all the reviews from Page No :-{self.count} \n')
@@ -144,11 +144,15 @@ class AmazonReviewScraper:
         print('-----------------------------------------------------------------------------')
         print('All reviews are fetched Sucessfully')
         pprint.pprint(self.reviews_list)
+
+        review_sentiment_analyser = ReviewSentimentalAnalyser()
+
         ReviewSentimentalAnalyser.filename = file_name
-        ReviewSentimentalAnalyser.import_csvfile(choose)
-        # self.average_rating_list.append(ReviewSentimentalAnalyser.product_average_rating)
-        machine_learning_rating = ReviewSentimentalAnalyser.product_average_rating
-        # print(f'Machine Learning Average Rating :- {ReviewSentimentalAnalyser.product_average_rating}')
+        rating = review_sentiment_analyser.import_csvfile(choose)
+        # self.average_rating_list.append(review_sentiment_analyser.product_average_rating)
+        machine_learning_rating = review_sentiment_analyser.product_average_rating
+
+        # print(f'Machine Learning Average Rating :- {review_sentiment_analyser.product_average_rating}')
         self.get_title_image_rating(product_title, product_image, product_rating, machine_learning_rating)
 
     def __str__(self):

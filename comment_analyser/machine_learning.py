@@ -21,9 +21,9 @@ from .algo import NaiveBayesAlgorithm, LogisticRegressionAlgorithm, SentiWordNet
 
 class ReviewSentimentalAnalyser:
     filename = ''
-    product_average_rating=0
+    product_average_rating=1
 
-    def import_csvfile(choose):
+    def import_csvfile(self, choose):
         print('\nImporting Train set data csv file ...')
         df = pd.read_csv('testdata.csv')
 
@@ -31,18 +31,18 @@ class ReviewSentimentalAnalyser:
         df.head()
         
         #Calling pipeline function
-        ReviewSentimentalAnalyser.choose_algorithm(choose, df)
-    def factory_method_design(obj = ''):
+        self.choose_algorithm(choose, df)
+    def factory_method_design(self, obj = ''):
         objs = dict(a=NaiveBayesAlgorithm, b=LogisticRegressionAlgorithm, c=SentiWordNetAlgorithm)
         return objs[obj]
 
-    def choose_algorithm(choose, df):
-        filename = ReviewSentimentalAnalyser.filename
-        algorithm = ReviewSentimentalAnalyser.factory_method_design(choose)
+    def choose_algorithm(self, choose, df):
+        filename = self.filename
+        algorithm = self.factory_method_design(choose)
         algorithm.algorithm(df, filename)
         # PipelineClass.func_pipeline(df)
         
-    def read_amazon_csv_file(clf, filename):
+    def read_amazon_csv_file(self, clf, filename):
         print('\nImporting the Amzon web scraping csv file ...')
         print(filename)
         new_dataset = pd.read_csv(filename)
@@ -54,10 +54,11 @@ class ReviewSentimentalAnalyser:
             
         average = model.sum()/len(model)
         print(average)
-        ReviewSentimentalAnalyser.average_rating(average)
+        self.average_rating(average)
                 
-    def average_rating(average):
+    def average_rating(self, average):
         print(f'\nAverage Rating :- {average}')
         ReviewSentimentalAnalyser.product_average_rating = average
+        print(self.product_average_rating)
         return average
 
