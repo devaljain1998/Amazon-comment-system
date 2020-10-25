@@ -7,38 +7,6 @@ from comment_analyser.ws_amazon import AmazonReviewScraper
 
 # Create your views here.
 
-reviews = [
-    {
-        'name': 'Redmi 8A Dual (Sea Blue, 2GB RAM, 32GB Storage) – Dual Cameras & 5,000 mAH Battery',
-        'image': "https://images-na.ssl-images-amazon.com/images/I/71yXShgxvpL._SL1500_.jpg",
-        'amazon_rating': '3 outof 5',
-        'machine_learning_rating': '3.2 out of 5'
-    },
-    {
-        'name': 'Apple iPhone 11 (128GB) - White',
-        'image': "https://images-na.ssl-images-amazon.com/images/I/71dujTTJDZL._SY445_.jpg",
-        'amazon_rating': '2.2 outof 5',
-        'machine_learning_rating': '2 out of 5'
-    },
-    {
-        'name': 'OPPO A5 2020 (Dazzling White, 4GB RAM, 64GB Storage) with No Cost EMI/Additional Exchange Offers',
-        'image': 'https://images-na.ssl-images-amazon.com/images/I/61ocuF6cTXL._SX466_.jpg',
-        'amazon_rating': '4.1 out of 5',
-        'machine_learning_rating': '4.0 out of 5'
-    },
-    {
-        'name': 'OPPO A5 2020 (Dazzling White, 4GB RAM, 64GB Storage) with No Cost EMI/Additional Exchange Offers',
-        'image': 'https://images-na.ssl-images-amazon.com/images/I/41IdxR0uYRL._AC_SY700_FMwebp_.jpg',
-        'amazon_rating': '4.1 out of 5',
-        'machine_learning_rating': '4.0 out of 5'
-    },
-    {
-        'name': 'OPPO A5 2020 (Dazzling White, 4GB RAM, 64GB Storage) with No Cost EMI/Additional Exchange Offers',
-        'image': 'https://images-na.ssl-images-amazon.com/images/I/81K3oJmBpmL._SX679_.jpg',
-        'amazon_rating': '4.1 out of 5',
-        'machine_learning_rating': '4.0 out of 5'
-    }
-]
 
 number_of_links = 2
 select_algorithm = ''
