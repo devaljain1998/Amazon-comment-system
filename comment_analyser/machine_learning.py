@@ -22,6 +22,10 @@ from .algo import NaiveBayesAlgorithm, LogisticRegressionAlgorithm, SentiWordNet
 class ReviewSentimentalAnalyser:
     filename = ''
     product_average_rating=1
+    percision = 0
+    recall = 0
+    f1_score = 0
+
 
     def import_csvfile(self, choose):
         print('\nImporting Train set data csv file ...')
@@ -51,14 +55,55 @@ class ReviewSentimentalAnalyser:
         #example = ['Worst battery in expensive iphone']
         model = clf.predict(new_X)
         print(f'\nIndividual rating prediction :- {model}')
-            
+
+        self.get_review_rate(model, new_dataset)
+
         average = model.sum()/len(model)
         print(average)
-        self.average_rating(average)
+        self.average_rating(average, new_dataset)
                 
-    def average_rating(self, average):
+    def average_rating(self, average, new_dataset):
         print(f'\nAverage Rating :- {average}')
         ReviewSentimentalAnalyser.product_average_rating = average
         print(self.product_average_rating)
-        return average
+        # return average
 
+    def get_review_rate(self, average, new_dataset):
+        get_rating = new_dataset['Rating'].to_list()
+        rating_list = []
+        for rating in range(0, len(get_rating)):
+            rate = get_rating[rating].split(" ")
+            rating_list.append(float(rate[0]))
+
+        print('Original Rating')
+        print(rating_list)
+        print('Predictied Rating')
+        print(average)
+
+        true_positive = 0
+        true_negative = 0
+        false_positive = 0
+        false_negative = 0
+
+        for rate in range(0, len(rating_list)):
+            if rating_list[rate] > 3:
+                if average[rate] > 3:
+                    true_positive += 1
+                else:
+                    false_positive += 1
+
+            elif rating_list[rate] < 3:
+                if average[rate] < 3:
+                    true_negative += 1
+                else:
+                    false_negative += 1
+
+        
+        print(f'Original Positive Rating :- {true_positive}, Original Negative Rating :- {true_negative}')
+        print(f'Predicted Positive Rating :- {false_positive}, Predicted Negative Rating :- {false_negative}')
+
+        ReviewSentimentalAnalyser.percision = true_positive / (true_positive + false_positive)
+        ReviewSentimentalAnalyser.recall = true_positive / (true_positive + false_negative)
+        ReviewSentimentalAnalyser.f1_score = 2*(self.recall * self.percision) / (self.recall + self.percision)
+
+        print(f'Precision :- {self.percision}, Recall :- {self.recall}, F1 Score :- {self.f1_score}')

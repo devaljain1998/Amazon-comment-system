@@ -18,7 +18,10 @@ def homepage(request):
 @login_required
 def get_amazon_review(request):
     reviews = AmazonReviewScraper.product_details
+    print('!!!!!!!!!!!!!!!!!!!!----------------------------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+    print('!!!!!!!!!!!!!!!!!!!!----------------------------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
     print(AmazonReviewScraper.product_details)
+    # print(AmazonReviewScraper.percision, AmazonReviewScraper.recall, f1_score)
     content = {
         'reviews' : reviews
     }

@@ -150,10 +150,18 @@ class AmazonReviewScraper:
         ReviewSentimentalAnalyser.filename = file_name
         rating = review_sentiment_analyser.import_csvfile(choose)
         # self.average_rating_list.append(review_sentiment_analyser.product_average_rating)
-        machine_learning_rating = review_sentiment_analyser.product_average_rating
 
-        # print(f'Machine Learning Average Rating :- {review_sentiment_analyser.product_average_rating}')
-        self.get_title_image_rating(product_title, product_image, product_rating, machine_learning_rating)
+        percision = review_sentiment_analyser.percision
+        recall = review_sentiment_analyser.recall
+        f1_score = review_sentiment_analyser.f1_score
+
+        print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+        print('-------------------------------------------------------')
+        machine_learning_rating = review_sentiment_analyser.product_average_rating
+        print(review_sentiment_analyser.product_average_rating)
+        print(percision, recall, f1_score)
+
+        self.get_title_image_rating(product_title, product_image, product_rating, machine_learning_rating, percision, recall, f1_score)
 
     def __str__(self):
         review = f'{self.title} \n {self.body} \n {self.rating}'
@@ -163,7 +171,7 @@ class AmazonReviewScraper:
         review = f'{self.title} \n {self.body} \n {self.rating}'
         return review
 
-    def get_title_image_rating(self, title, image, rating, machine_learning_rating):
+    def get_title_image_rating(self, title, image, rating, machine_learning_rating, percision, recall, f1_score):
         details = {}
         roundof = round(machine_learning_rating, 1)
         ml_rating = str(roundof) + ' out of 5 starts'
@@ -177,6 +185,10 @@ class AmazonReviewScraper:
         details['image'] = image
         details['amazon_rating'] = rating
         details['machine_learning_rating'] = ml_rating
+        details['percision'] = percision
+        details['recall'] = recall
+        details['f1_score'] = f1_score
+
         self.product_details.append(details)
     
 
