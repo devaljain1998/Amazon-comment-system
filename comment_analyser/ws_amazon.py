@@ -48,6 +48,7 @@ class AmazonReviewScraper:
         driver.quit()
 
         soup = BeautifulSoup(res, 'lxml')
+        
         for reviews in soup.find_all('div', {'data-hook': 'review'}):
             rating = reviews.find('i', {'data-hook': 'review-star-rating'})
             rating_text = rating.span.text
@@ -112,13 +113,16 @@ class AmazonReviewScraper:
 
 
         image = soup.find('div', {'id': 'dp'})
+        # print("Image")
 
-        product_title = soup.find('div', {'id': 'title_feature_div'}).find('div', {'id': 'titleSection'}).find('h1', {'id': 'title'}).find('span', {'id': 'productTitle'}).text
-        product_image = image.find('div', {'id': 'dp-container'}).find('div', {'id': 'leftCol'}).find('div', {'id': 'imageBlock'}).find('img', {'id': 'landingImage'})['src']
+        product_title = image.find('div', {'id': 'dp-container'}).find('div', {'id': 'centerCol'}).find('span', {'id': 'productTitle'}).text
+        # print(product_title)
+        product_image = image.find('div', {'id': 'dp-container'}).find('div', {'id': 'leftCol'}).find('div', {'id': 'imageBlock'}).find('div', {'id': 'main-image-container'}).find_all('img')[0]['src']
+        # print(product_image)
         product_rating = image.find('div', {'id': 'dp-container'}).find('div', {'id': 'centerCol'}).find('div', {'id': 'averageCustomerReviews_feature_div'}).find('div', {'id': 'averageCustomerReviews'}).find('span', {'id': 'acrPopover'})['title']
-        
+        # print("Rating")
         container = image.find('div', {'class': 'a-container'})
-
+        # print("Container")
         # Get see all review link
         review_link = image.find('a', {'data-hook': 'see-all-reviews-link-foot'})['href']
         see_all_review_url = self.get_url(url) + review_link
