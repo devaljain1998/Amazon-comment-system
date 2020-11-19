@@ -44,6 +44,7 @@ class LogisticRegressionAlgorithm:
 class SentiWordNetAlgorithm:
     # df = pd.read_csv('reviews_0.csv')
     # title = df['Title']
+
     ps = PorterStemmer()
     lemmatizer = WordNetLemmatizer()    
 
@@ -113,5 +114,8 @@ class SentiWordNetAlgorithm:
 
         from .machine_learning import ReviewSentimentalAnalyser
 
-        ReviewSentimentalAnalyser.average_rating(average_product_rating)
-
+        review_sentimental_analyser = ReviewSentimentalAnalyser()
+        review_sentimental_analyser.average_rating(average_product_rating)
+        new_dataset = pd.read_csv(filename)
+        review_sentimental_analyser.get_review_rate(SentiWordNetAlgorithm.all_rating, new_dataset)
+        

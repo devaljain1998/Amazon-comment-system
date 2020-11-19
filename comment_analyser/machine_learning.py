@@ -60,9 +60,9 @@ class ReviewSentimentalAnalyser:
 
         average = model.sum()/len(model)
         print(average)
-        self.average_rating(average, new_dataset)
+        self.average_rating(average)
                 
-    def average_rating(self, average, new_dataset):
+    def average_rating(self, average):
         print(f'\nAverage Rating :- {average}')
         ReviewSentimentalAnalyser.product_average_rating = average
         print(self.product_average_rating)
