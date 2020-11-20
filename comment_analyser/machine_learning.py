@@ -25,7 +25,7 @@ class ReviewSentimentalAnalyser:
     percision = 0
     recall = 0
     f1_score = 0
-
+    
 
     def import_csvfile(self, choose):
         print('\nImporting Train set data csv file ...')

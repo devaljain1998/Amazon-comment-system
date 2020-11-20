@@ -6,6 +6,7 @@ import pprint
 from .models import Review
 from bs4 import BeautifulSoup
 from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 
 from .machine_learning import ReviewSentimentalAnalyser
@@ -41,7 +42,8 @@ class AmazonReviewScraper:
         options.add_argument('--headless')
         options.add_argument('--disable-gpu')
 
-        driver = webdriver.Chrome(options=options)
+        # driver = webdriver.Chrome(options=options)
+        driver = webdriver.Chrome(ChromeDriverManager().install())
         driver.get(show_all_reviews)
         res = driver.execute_script(
             "return document.documentElement.outerHTML")
@@ -104,7 +106,8 @@ class AmazonReviewScraper:
         options.add_argument('--headless')
         options.add_argument('--disable-gpu')
 
-        driver = webdriver.Chrome()
+        # driver = webdriver.Chrome()
+        driver = webdriver.Chrome(ChromeDriverManager().install())
         driver.get(url)
         res = driver.execute_script("return document.documentElement.outerHTML")
         driver.quit()
