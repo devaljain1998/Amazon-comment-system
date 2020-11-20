@@ -6,6 +6,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.neighbors import KNeighborsClassifier
 from sklearn.pipeline import Pipeline
 from nltk.corpus import wordnet as wn
 from nltk.corpus import sentiwordnet as swn
@@ -120,3 +121,28 @@ class SentiWordNetAlgorithm:
         new_dataset = pd.read_csv(filename)
         review_sentimental_analyser.get_review_rate(all_rating, new_dataset)
         
+class RandomForestClassifierAlgorithm:
+    def algorithm(self, df, filename):
+        print('Logistic Regression')
+        print('\nFitting pipeline ...')
+        clf = Pipeline([
+            ('vect', CountVectorizer(stop_words= "english")),
+            ('tfidf', TfidfTransformer()),
+            ('classifier', RandomForestClassifier()),
+            ])
+
+        df_1 = df.dropna()
+        TestTrainData.test_train_data(df_1, clf)
+
+class KNeighborsClassifierAlgorithm:
+    def algorithm(self, df, filename):
+        print('Logistic Regression')
+        print('\nFitting pipeline ...')
+        clf = Pipeline([
+            ('vect', CountVectorizer(stop_words= "english")),
+            ('tfidf', TfidfTransformer()),
+            ('classifier', KNeighborsClassifier()),
+            ])
+
+        df_1 = df.dropna()
+        TestTrainData.test_train_data(df_1, clf)

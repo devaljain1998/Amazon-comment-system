@@ -4,7 +4,9 @@ ALGORITHM_CHOICES = (
     ("a",'Choose algorithm (Default :- "Naïve Bayes Text Classification")'),
     ("a", "Naïve Bayes Text Classification"),
     ("b", "Logistic Regression"),
-    ("c", "SentiWordNet")
+    ("c", "SentiWordNet"),
+    ("d", "Random Forest Classifier"),
+    ("e", "K Neighbors Classifier")
 )
 
 class GetAllLink(forms.Form):

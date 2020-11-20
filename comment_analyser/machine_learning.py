@@ -10,13 +10,11 @@ import matplotlib.pyplot as plt
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer, TfidfTransformer
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import MultinomialNB
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 
-from .algo import NaiveBayesAlgorithm, LogisticRegressionAlgorithm, SentiWordNetAlgorithm
+from .algo import NaiveBayesAlgorithm, LogisticRegressionAlgorithm, SentiWordNetAlgorithm, RandomForestClassifierAlgorithm, KNeighborsClassifierAlgorithm
 # from average_rating import AverageRating
 
 class ReviewSentimentalAnalyser:
@@ -37,7 +35,13 @@ class ReviewSentimentalAnalyser:
         #Calling pipeline function
         self.choose_algorithm(choose, df)
     def factory_method_design(self, obj = ''):
-        objs = dict(a=NaiveBayesAlgorithm(), b=LogisticRegressionAlgorithm(), c=SentiWordNetAlgorithm())
+        objs = dict(
+            a=NaiveBayesAlgorithm(), 
+            b=LogisticRegressionAlgorithm(), 
+            c=SentiWordNetAlgorithm(), 
+            d=RandomForestClassifierAlgorithm(),
+            e=KNeighborsClassifierAlgorithm()
+            )
         return objs[obj]
 
     def choose_algorithm(self, choose, df):
