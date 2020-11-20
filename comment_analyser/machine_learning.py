@@ -37,7 +37,7 @@ class ReviewSentimentalAnalyser:
         #Calling pipeline function
         self.choose_algorithm(choose, df)
     def factory_method_design(self, obj = ''):
-        objs = dict(a=NaiveBayesAlgorithm, b=LogisticRegressionAlgorithm, c=SentiWordNetAlgorithm)
+        objs = dict(a=NaiveBayesAlgorithm(), b=LogisticRegressionAlgorithm(), c=SentiWordNetAlgorithm())
         return objs[obj]
 
     def choose_algorithm(self, choose, df):
