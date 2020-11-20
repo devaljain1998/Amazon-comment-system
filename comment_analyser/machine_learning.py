@@ -102,8 +102,13 @@ class ReviewSentimentalAnalyser:
         print(f'Original Positive Rating :- {true_positive}, Original Negative Rating :- {true_negative}')
         print(f'Predicted Positive Rating :- {false_positive}, Predicted Negative Rating :- {false_negative}')
 
-        ReviewSentimentalAnalyser.percision = true_positive / (true_positive + false_positive)
-        ReviewSentimentalAnalyser.recall = true_positive / (true_positive + false_negative)
-        ReviewSentimentalAnalyser.f1_score = 2*(self.recall * self.percision) / (self.recall + self.percision)
+        percision = true_positive / (true_positive + false_positive)
+        recall = true_positive / (true_positive + false_negative)
+        f1_score = 2*(recall * percision) / (recall + percision)
+
+        ReviewSentimentalAnalyser.percision = round(percision, 2)
+        ReviewSentimentalAnalyser.recall = round(recall, 2)
+        ReviewSentimentalAnalyser.f1_score = round(f1_score, 2)
 
         print(f'Precision :- {self.percision}, Recall :- {self.recall}, F1 Score :- {self.f1_score}')
+        print(f'Precision :- {round(self.percision, 2)}, Recall :- {round(self.recall, 2)}, F1 Score :- {round(self.f1_score, 2)}')
