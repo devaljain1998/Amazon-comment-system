@@ -155,6 +155,10 @@ class AmazonReviewScraper:
         percision = review_sentiment_analyser.percision
         recall = review_sentiment_analyser.recall
         f1_score = review_sentiment_analyser.f1_score
+        true_positive = review_sentiment_analyser.true_positive
+        true_negative = review_sentiment_analyser.true_negative
+        false_positive = review_sentiment_analyser.false_positive
+        false_negative = review_sentiment_analyser.false_negative
 
         print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
         print('-------------------------------------------------------')
@@ -162,7 +166,7 @@ class AmazonReviewScraper:
         print(review_sentiment_analyser.product_average_rating)
         print(percision, recall, f1_score)
 
-        self.get_title_image_rating(product_title, product_image, product_rating, machine_learning_rating, percision, recall, f1_score)
+        self.get_title_image_rating(product_title, product_image, product_rating, machine_learning_rating, percision, recall, f1_score, true_positive, true_negative ,false_positive ,false_negative)
 
     def __str__(self):
         review = f'{self.title} \n {self.body} \n {self.rating}'
@@ -172,7 +176,7 @@ class AmazonReviewScraper:
         review = f'{self.title} \n {self.body} \n {self.rating}'
         return review
 
-    def get_title_image_rating(self, title, image, rating, machine_learning_rating, percision, recall, f1_score):
+    def get_title_image_rating(self, title, image, rating, machine_learning_rating, percision, recall, f1_score, true_positive, true_negative, false_positive ,false_negative):
         details = {}
         roundof = round(machine_learning_rating, 1)
         ml_rating = str(roundof) + ' out of 5 starts'
@@ -189,6 +193,10 @@ class AmazonReviewScraper:
         details['percision'] = percision
         details['recall'] = recall
         details['f1_score'] = f1_score
+        details['true_positive'] = true_positive        
+        details['true_negative'] = true_negative
+        details['false_positive'] = false_positive
+        details['false_negative'] = false_negative        
         details['webpage'] = 'Amazon'
 
         self.product_details.append(details)

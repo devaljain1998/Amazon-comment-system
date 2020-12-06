@@ -32,12 +32,12 @@
                                             <tr>
                                                 {% if review.webpage == 'Flipkart' %}
                                                 <th scope="col"><img src="/static/img/Flipkart_logo.png" alt=""
-                                                    style="height: 50px;"></th>
+                                                        style="height: 50px;"></th>
                                                 {% else %}
                                                 <th scope="col"><img src="/static/img/Amazon_logo.png" alt=""
                                                         style="height: 50px;"></th>
                                                 {% endif %}
-                                                        <th scope="col"><img src="/static/img/machine_learning.png" alt=""
+                                                <th scope="col"><img src="/static/img/machine_learning.png" alt=""
                                                         style="height: 50px;"></th>
                                             </tr>
                                         </thead>
@@ -71,10 +71,25 @@
                                             <td><b>F1_score</b></td>
                                             <td>{{ review.f1_score}}</td>
                                         </tr>
+                                        <tr>
+                                            <td><b>True Positive</b></td>
+                                            <td>{{review.true_positive}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>True Negative</b></td>
+                                            <td>{{review.true_negative}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>False Positive</b></td>
+                                            <td>{{review.false_positive}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>False Negative</b></td>
+                                            <td>{{review.false_negative}}</td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <!-- </div> -->
                         </div>
                     </div>
                 </div>

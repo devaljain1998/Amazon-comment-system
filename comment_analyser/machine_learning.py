@@ -23,7 +23,10 @@ class ReviewSentimentalAnalyser:
     percision = 0
     recall = 0
     f1_score = 0
-    
+    true_positive = 0
+    true_negative = 0
+    false_positive = 0
+    false_negative = 0
 
     def import_csvfile(self, choose):
         print('\nImporting Train set data csv file ...')
@@ -113,6 +116,11 @@ class ReviewSentimentalAnalyser:
         ReviewSentimentalAnalyser.percision = round(percision, 2)
         ReviewSentimentalAnalyser.recall = round(recall, 2)
         ReviewSentimentalAnalyser.f1_score = round(f1_score, 2)
+        ReviewSentimentalAnalyser.true_positive = true_positive
+        ReviewSentimentalAnalyser.true_negative = true_negative
+        ReviewSentimentalAnalyser.false_positive = false_positive
+        ReviewSentimentalAnalyser.false_negative = false_negative
 
         print(f'Precision :- {self.percision}, Recall :- {self.recall}, F1 Score :- {self.f1_score}')
         print(f'Precision :- {round(self.percision, 2)}, Recall :- {round(self.recall, 2)}, F1 Score :- {round(self.f1_score, 2)}')
+        print(f'True Positive :- {self.true_positive} True Negative :- {self.true_positive} False Positive :- {self.false_positive} False Negative :- {self.false_negative}')
