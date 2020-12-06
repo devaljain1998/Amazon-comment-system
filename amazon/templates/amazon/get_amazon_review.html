@@ -30,15 +30,20 @@
                                     <table class="table" style="width: 100%;">
                                         <thead>
                                             <tr>
+                                                {% if review.webpage == 'Flipkart' %}
+                                                <th scope="col"><img src="/static/img/Flipkart_logo.png" alt=""
+                                                    style="height: 50px;"></th>
+                                                {% else %}
                                                 <th scope="col"><img src="/static/img/Amazon_logo.png" alt=""
                                                         style="height: 50px;"></th>
-                                                <th scope="col"><img src="/static/img/machine_learning.png" alt=""
+                                                {% endif %}
+                                                        <th scope="col"><img src="/static/img/machine_learning.png" alt=""
                                                         style="height: 50px;"></th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td id="amazon_rating_text">{{review.amazon_rating}}</td>
+                                                <td id="amazon_rating_text">{{review.original_rating}}</td>
                                                 <td id="machine_learning_rating_text">{{review.machine_learning_rating}}
                                                 </td>
                                             </tr>

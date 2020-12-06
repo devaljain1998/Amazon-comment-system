@@ -10,11 +10,8 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 
 from .machine_learning import ReviewSentimentalAnalyser
+from .product_details import ProductDetails
 # from average_rating import AverageRating
-
-# Review class
-
-file_count = -1
 
 
 class AmazonReviewScraper:
@@ -42,11 +39,10 @@ class AmazonReviewScraper:
         options.add_argument('--headless')
         options.add_argument('--disable-gpu')
 
-        # driver = webdriver.Chrome(options=options)
-        driver = webdriver.Chrome(ChromeDriverManager().install())
+        driver = webdriver.Chrome(options=options)
+        # driver = webdriver.Chrome(ChromeDriverManager().install())
         driver.get(show_all_reviews)
-        res = driver.execute_script(
-            "return document.documentElement.outerHTML")
+        res = driver.execute_script("return document.documentElement.outerHTML")
         driver.quit()
 
         soup = BeautifulSoup(res, 'lxml')
@@ -106,8 +102,8 @@ class AmazonReviewScraper:
         options.add_argument('--headless')
         options.add_argument('--disable-gpu')
 
-        # driver = webdriver.Chrome()
-        driver = webdriver.Chrome(ChromeDriverManager().install())
+        driver = webdriver.Chrome()
+        # driver = webdriver.Chrome(ChromeDriverManager().install())
         driver.get(url)
         res = driver.execute_script("return document.documentElement.outerHTML")
         driver.quit()
@@ -134,10 +130,8 @@ class AmazonReviewScraper:
         print(see_all_review_url)
         
         # Opening the CSV file
-        global file_count
-        file_count = file_count+1
-        str_n = str(file_count)
-        file_name = 'reviews_' + str_n + '.csv'
+        
+        file_name = product_title + '.csv'
         csv_file = open(file_name, 'w')
         read_csv_file = open(file_name, 'r')
         csv_writer = csv.writer(csv_file)
@@ -190,26 +184,23 @@ class AmazonReviewScraper:
 
         details['title'] = title
         details['image'] = image
-        details['amazon_rating'] = rating
+        details['original_rating'] = rating
         details['machine_learning_rating'] = ml_rating
         details['percision'] = percision
         details['recall'] = recall
         details['f1_score'] = f1_score
+        details['webpage'] = 'Amazon'
 
         self.product_details.append(details)
+        product_details = ProductDetails()
+        product_details.get_product_details(details)
     
 
 
-    def main_function(self, number_of_links, links, choose_algorithm):
-        n = number_of_links
-        my_list = links
-        choose = choose_algorithm
-        for url in my_list:
-            self.count = 0
-            print('-------------------------------------------------------------------------------')
-            print(url)
-            self.get_url(url)
-            print('-------------------------------------------------------------------------------')
-            self.open_amazon_url(url, choose)
-
-        print(self.product_details)
+    def main_function(self, number_of_links, url, choose_algorithm):
+        print('abncdasdbasfadsfhds')
+        print(number_of_links, url, choose_algorithm)
+        print(url)
+        self.get_url(url)
+        self.open_amazon_url(url, choose_algorithm)
+        print('AMAZON')
