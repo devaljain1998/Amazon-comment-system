@@ -128,7 +128,7 @@ class RandomForestClassifierAlgorithm:
         clf = Pipeline([
             ('vect', CountVectorizer(stop_words= "english")),
             ('tfidf', TfidfTransformer()),
-            ('classifier', RandomForestClassifier()),
+            ('classifier', RandomForestClassifier(n_estimators = 10, criterion = 'entropy', random_state = 0)),
             ])
 
         df_1 = df.dropna()
