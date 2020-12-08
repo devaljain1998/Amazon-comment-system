@@ -155,10 +155,9 @@ class AmazonReviewScraper:
         percision = review_sentiment_analyser.percision
         recall = review_sentiment_analyser.recall
         f1_score = review_sentiment_analyser.f1_score
-        true_positive = review_sentiment_analyser.true_positive
-        true_negative = review_sentiment_analyser.true_negative
-        false_positive = review_sentiment_analyser.false_positive
-        false_negative = review_sentiment_analyser.false_negative
+        positive = review_sentiment_analyser.positive
+        negative = review_sentiment_analyser.negative
+        neutral = review_sentiment_analyser.neutral
 
         print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
         print('-------------------------------------------------------')
@@ -166,7 +165,7 @@ class AmazonReviewScraper:
         print(review_sentiment_analyser.product_average_rating)
         print(percision, recall, f1_score)
 
-        self.get_title_image_rating(product_title, product_image, product_rating, machine_learning_rating, percision, recall, f1_score, true_positive, true_negative ,false_positive ,false_negative)
+        self.get_title_image_rating(product_title, product_image, product_rating, machine_learning_rating, percision, recall, f1_score, positive, negative, neutral)
 
     def __str__(self):
         review = f'{self.title} \n {self.body} \n {self.rating}'
@@ -176,7 +175,7 @@ class AmazonReviewScraper:
         review = f'{self.title} \n {self.body} \n {self.rating}'
         return review
 
-    def get_title_image_rating(self, title, image, rating, machine_learning_rating, percision, recall, f1_score, true_positive, true_negative, false_positive ,false_negative):
+    def get_title_image_rating(self, title, image, rating, machine_learning_rating, percision, recall, f1_score, positive, negative, neutral):
         details = {}
         roundof = round(machine_learning_rating, 1)
         ml_rating = str(roundof) + ' out of 5 starts'
@@ -193,18 +192,15 @@ class AmazonReviewScraper:
         details['percision'] = percision
         details['recall'] = recall
         details['f1_score'] = f1_score
-        details['true_positive'] = true_positive        
-        details['true_negative'] = true_negative
-        details['false_positive'] = false_positive
-        details['false_negative'] = false_negative        
+        details['positive'] = positive        
+        details['negative'] = negative
+        details['neutral'] = neutral
         details['webpage'] = 'Amazon'
 
         self.product_details.append(details)
         product_details = ProductDetails()
         product_details.get_product_details(details)
     
-
-
     def main_function(self, number_of_links, url, choose_algorithm):
         print('abncdasdbasfadsfhds')
         print(number_of_links, url, choose_algorithm)
