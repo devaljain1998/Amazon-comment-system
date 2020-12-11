@@ -73,7 +73,7 @@ class FlipkartReviewScraper:
                 except Exception:
                     pass
 
-        if self.count <= 3:
+        if self.count <= 99:
             try:
                 self.count += 1
                 print(
