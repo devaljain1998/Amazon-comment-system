@@ -39,8 +39,8 @@ class AmazonReviewScraper:
         options.add_argument('--headless')
         options.add_argument('--disable-gpu')
 
-        driver = webdriver.Chrome(options=options)
         # driver = webdriver.Chrome(ChromeDriverManager().install())
+        driver = webdriver.Chrome(options=options)
         driver.get(show_all_reviews)
         res = driver.execute_script("return document.documentElement.outerHTML")
         driver.quit()
@@ -64,7 +64,8 @@ class AmazonReviewScraper:
             )
 
             self.reviews_list.append(review)
-
+            print('==================+++++++++++++++++++====================')
+            print([title_text, body_text, rating_text])
             # Printing the console statement
             csv_writer.writerow([title_text, body_text, rating_text])
 
@@ -98,12 +99,12 @@ class AmazonReviewScraper:
 
     def open_amazon_url(self, url, choose):
 
+        driver = webdriver.Chrome(ChromeDriverManager().install())
         options = Options()
         options.add_argument('--headless')
         options.add_argument('--disable-gpu')
 
-        driver = webdriver.Chrome()
-        # driver = webdriver.Chrome(ChromeDriverManager().install())
+        # driver = webdriver.Chrome()
         driver.get(url)
         res = driver.execute_script("return document.documentElement.outerHTML")
         driver.quit()
@@ -130,9 +131,13 @@ class AmazonReviewScraper:
         print(see_all_review_url)
         
         # Opening the CSV file
-        
+        product_title = product_title.replace('\n','')
+        product_title = product_title.replace('\t','')
+        product_title = product_title.replace(' ', '_')
+        print('*****************************')
+        print(product_title)
         file_name = product_title + '.csv'
-        csv_file = open(file_name, 'w')
+        csv_file = open(file_name, 'w', encoding='utf-8')
         read_csv_file = open(file_name, 'r')
         csv_writer = csv.writer(csv_file)
         reader = csv.reader(read_csv_file)

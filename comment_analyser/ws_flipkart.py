@@ -102,11 +102,12 @@ class FlipkartReviewScraper:
             print('Count :- ', self.count)
 
     def open_flipkart_url(self, url, choose):
+        driver = webdriver.Chrome(ChromeDriverManager().install())
         options = Options()
         options.add_argument('--headless')
         options.add_argument('--disable-gpu')
 
-        driver = webdriver.Chrome()
+        # driver = webdriver.Chrome()
         driver.get(url)
         res = driver.execute_script("return document.documentElement.outerHTML")
         driver.quit()
@@ -132,8 +133,14 @@ class FlipkartReviewScraper:
         reviews = self.get_new_url + reviews
         print(reviews)
 
+        product_title = product_title.replace('\n','')
+        product_title = product_title.replace('\t','')
+        product_title = product_title.replace(' ', '_')
+        print('*****************************')
+        print(product_title)
+
         file_name = product_title+'.csv'
-        csv_file = open(file_name, 'w')
+        csv_file = open(file_name, 'w', encoding='utf-8')
         csv_writer = csv.writer(csv_file)
         csv_writer.writerow(['Title', 'Data', 'Rating'])
 
