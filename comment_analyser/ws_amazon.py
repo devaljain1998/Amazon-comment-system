@@ -2,6 +2,8 @@ import requests
 import csv
 import pandas as pd
 import pprint
+import string
+import re
 
 from .models import Review
 from bs4 import BeautifulSoup
@@ -131,6 +133,8 @@ class AmazonReviewScraper:
         print(see_all_review_url)
         
         # Opening the CSV file
+        chars = re.escape(string.punctuation)
+        product_title = re.sub(r'['+chars+']', '',product_title)
         product_title = product_title.replace('\n','')
         product_title = product_title.replace('\t','')
         product_title = product_title.replace(' ', '_')
